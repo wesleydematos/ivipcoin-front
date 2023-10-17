@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client'
 import React from 'react'
 
-import App from './App.tsx'
-import './index.css'
-
 import {ToastContainer} from "react-toastify"
 import "react-toastify/dist/ReactToastify.min.css"
+
+import App from './App.tsx'
+import './index.css'
 
 import {ThemeProvider} from '@emotion/react'
 import {CssBaseline} from "@mui/material"
