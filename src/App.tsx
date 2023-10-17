@@ -5,13 +5,13 @@ import {TaskProvider} from "./contexts/TaskContext"
 
 function App() {
   return (
-    <UserProvider>
-      <TaskProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
+        <TaskProvider>
           <RoutesMain/>
-        </BrowserRouter>
-      </TaskProvider>
-    </UserProvider>
+        </TaskProvider>
+      </UserProvider>
+    </BrowserRouter>
   )
 }
 
