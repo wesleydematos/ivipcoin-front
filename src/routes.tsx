@@ -12,9 +12,9 @@ export const RoutesMain = () => {
     return (
         <Routes>
             <Route path="/" element={<SignInPage />}/>
-            <Route path="/signup" element={<SignUpPage/>}/>
+            <Route path="/registro" element={<SignUpPage/>}/>
             <Route element={<AuthRoutes/>}>
-                <Route path="/tasks" element={<TaskPage/>} />
+                <Route path="/tarefas" element={<TaskPage/>}/>
             </Route>
             <Route path="*" element={<Navigate to="/"/>}/>
         </Routes>
