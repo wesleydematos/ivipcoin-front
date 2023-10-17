@@ -5,6 +5,7 @@ export interface iUserContext {
     setLoading: Dispatch<SetStateAction<boolean>>
     handleLogin(data: iLogin): Promise<void>
     username: string
+    handleRegister(data: iRegisterData): Promise<void>
 }
 
 export interface iUserContextProps {
@@ -12,6 +13,19 @@ export interface iUserContextProps {
 }
 
 export interface iLogin {
-    email: string;
-    password: string;
+    email: string
+    password: string
+}
+
+export interface iRegister {
+    name: string
+    email: string
+    password: string
+}
+
+export interface iRegisterData {
+    firstName: string
+    lastName: string
+    email: string
+    password: string
 }

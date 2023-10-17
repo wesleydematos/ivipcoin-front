@@ -1,5 +1,10 @@
 import {Avatar, Button, TextField, Link, Grid, Box, Typography, Container} from "@mui/material"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import {useForm} from "react-hook-form"
+import {iRegisterData} from "../../contexts/UserContext/interfaces"
+import {yupResolver} from "@hookform/resolvers/yup"
+import {registerSchema} from "../../schemas"
+import {useUserContext} from "../../contexts/UserContext"
 
 function Copyright() {
   return (
@@ -10,9 +15,13 @@ function Copyright() {
 }
 
 export const SignUpPage = () =>{
-  const handleSubmit = () => {
-    console.log("/")
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+} = useForm<iRegisterData>({resolver: yupResolver(registerSchema)})
+
+const {handleRegister} = useUserContext()
 
   return (
     <Box
@@ -38,10 +47,12 @@ export const SignUpPage = () =>{
           <Typography component="h1" variant="h5">
             Registre-se
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit(handleRegister)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={!!errors.firstName}
+                  {...register("firstName")}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -53,6 +64,8 @@ export const SignUpPage = () =>{
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={!!errors.lastName}
+                  {...register("lastName")}
                   required
                   fullWidth
                   id="lastName"
@@ -63,6 +76,8 @@ export const SignUpPage = () =>{
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={!!errors.email}
+                  {...register("email")}
                   required
                   fullWidth
                   id="email"
@@ -73,6 +88,8 @@ export const SignUpPage = () =>{
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={!!errors.password}
+                  {...register("password")}
                   required
                   fullWidth
                   name="password"

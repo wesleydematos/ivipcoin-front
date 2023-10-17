@@ -1,5 +1,5 @@
 import {createContext, useContext, useState} from "react"
-import {iLogin, iUserContext, iUserContextProps} from "./interfaces"
+import {iLogin, iRegister, iRegisterData, iUserContext, iUserContextProps} from "./interfaces"
 import {useNavigate} from "react-router-dom"
 import {api} from "../../services/api"
 import {toast} from "react-toastify"
@@ -35,12 +35,28 @@ export const UserProvider = ({children}: iUserContextProps) => {
         }
     }
 
+    async function handleRegister(data: iRegisterData) {
+        setLoading(true)
+        const userData: iRegister = {email: data.email, password: data.password, name: `${data.firstName} ${data.lastName}`}
+    
+        try {
+            await api.post("/user", userData)
+            toast.success("Conta criada com sucesso!")
+            navigate("/");
+        } catch (error) {
+            toast.error("Falha ao criar a conta, caso o erro persista tente outro email.")
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <UserContext.Provider value={{
             loading,
             setLoading,
             handleLogin, 
-            username
+            username,
+            handleRegister
         }}>
             {children}
         </UserContext.Provider>
