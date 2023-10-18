@@ -14,7 +14,7 @@ const style = {
 }
 
 export const DeleteTaskModal = () => {
-  const {openDelete, handleDeleteClose, task} = useTaskContext()
+  const {openDelete, handleDeleteClose, task, deleteTask} = useTaskContext()
 
   return (
     <Modal
@@ -38,7 +38,7 @@ export const DeleteTaskModal = () => {
           </Typography>
           <Typography sx={{color: "#fff", mt: 3}}>Tem certeza que deseja deletar a tarefa "{task.title}"?</Typography>
           <Button  
-            type="submit"
+            onClick={()=>deleteTask(task.id)}
             fullWidth
             variant="contained"
             sx={{mt: 3, mb: 2, color: "#fff", ":hover":{color: "#ffffff77"}}}

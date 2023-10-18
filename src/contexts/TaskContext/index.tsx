@@ -4,10 +4,12 @@ import {toast} from "react-toastify"
 
 import {iTask, iTaskContext, iTaskContextProps} from "./interfaces"
 import {api} from "../../services/api"
+import { useUserContext } from "../UserContext"
 
 const TaskContext = createContext<iTaskContext>({} as iTaskContext)
 
 export const TaskProvider = ({children}: iTaskContextProps) => {
+  const {setLoading} = useUserContext()
   const TASKS_PER_PAGE = 5
   const [tasks, setTasks] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
@@ -26,49 +28,54 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
   const handleDeleteOpen = () => setOpenDelete(true)
   const handleDeleteClose = () => setOpenDelete(false)
 
-
-  const getFullTaskListRequest = async () => {
-    try {
-        const response = await api.get('/tasks')
-        return response.data
-    } catch (error) {
-        console.log(error)
-    }
-  }
-
-  const getTasks = async (): Promise<void> => {
+  const getTasks = async () => {
     const token = localStorage.getItem("@Token-ivipcoin")
     api.defaults.headers.common.authorization = `Bearer ${token}`
 
     try {
       const response = await api.get('/tasks')
       setTasks(response.data)
+      return response.data
     } catch (error) {
       toast.error("Não foi possível listar as tarefas!")
       console.log(error)
     } 
   }
-
+  
+  const getMyTaskList = async () => {
+    const userId = localStorage.getItem("@userId")
+    const taskListData = await getTasks()
+    const currentUserTasks = taskListData.filter((task: iTask) =>  task.owner.user_id === userId)
+    
+    setTaskList(currentUserTasks)
+  }
+  
   const getCurrentTasks = () => {
     const startIndex = currentPage * TASKS_PER_PAGE
     const endIndex = startIndex + TASKS_PER_PAGE
     return taskList.slice(startIndex, endIndex)
   }
 
-  const getMyTaskList = async () => {
-    const userId = localStorage.getItem("@userId")
-    const taskListData = await getFullTaskListRequest()
-    const currentUserTasks = taskListData.filter((task: iTask) =>  task.owner.user_id === userId)
-
-    setTaskList(currentUserTasks)
+  const deleteTask = async (taskId: string) => {
+    setLoading(true)
+    try {
+      await api.delete(`/tasks/${taskId}`)
+      await getMyTaskList()
+      setTaskListUpdate(!taskListUpdate)
+      handleDeleteClose()
+      toast.success("Tarefa deletada com sucesso!")
+    } catch (error) {
+      console.log(error)
+      toast.success("Não foi possível deletar a tarefa!")
+    }finally{
+      setLoading(false)
+    }
   }
-  
 
   return (
     <TaskContext.Provider value={{
       getTasks,
       tasks, 
-      getFullTaskListRequest, 
       getCurrentTasks,
       TASKS_PER_PAGE,
       setCurrentPage,
@@ -89,7 +96,8 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
       openDelete,
       setOpenDelete,
       handleDeleteOpen,
-      handleDeleteClose
+      handleDeleteClose,
+      deleteTask
     }}>
       {children}
     </TaskContext.Provider>

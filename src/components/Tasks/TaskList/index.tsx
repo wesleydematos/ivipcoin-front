@@ -13,15 +13,11 @@ import {UpdateTaskModal} from "../UpdateTaskModal"
 import { DeleteTaskModal } from "../DeleteTaskModal"
 
 export const TaskList = () => {
-  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, refreshTask, taskListUpdate, getTasks, handleEditOpen, setTask, handleDeleteOpen} = useTaskContext()
+  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, refreshTask, taskListUpdate,  handleEditOpen, setTask, handleDeleteOpen} = useTaskContext()
 
   useEffect(() => {
     getMyTaskList()
   }, [refreshTask, taskListUpdate])
-
-  useEffect(() => {
-    getTasks()
-  }, [])
 
   if(taskList.length < 1){
     return <Typography>Não há tarefas para mostrar.</Typography>
@@ -38,9 +34,9 @@ export const TaskList = () => {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={task.title} secondary={task.description}/>
-            <EditIcon onClick={()=>{handleEditOpen(); setTask(task)}}/>
+            <EditIcon onClick={()=>{handleEditOpen(); setTask(task)}} sx={{cursor: "pointer"}}/>
             <UpdateTaskModal/>
-            <DeleteIcon onClick={()=>{handleDeleteOpen(); setTask(task)}}/>
+            <DeleteIcon onClick={()=>{handleDeleteOpen(); setTask(task)}} sx={{cursor: "pointer"}}/>
             <DeleteTaskModal/>
           </ListItem>
           ))}

@@ -3,7 +3,6 @@ import {ReactNode} from "react"
 export interface iTaskContext {
   getTasks: () => Promise<void>
   tasks: iTask[] | []
-  getFullTaskListRequest: () => Promise<iTask>
   getCurrentTasks: () => iTask[]
   TASKS_PER_PAGE: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
@@ -25,6 +24,7 @@ export interface iTaskContext {
   setOpenDelete: React.Dispatch<React.SetStateAction<boolean>>
   handleDeleteOpen: () => void
   handleDeleteClose: () => void
+  deleteTask: (taskId: string) => Promise<void>
 }
 
 export interface iTaskContextProps {
