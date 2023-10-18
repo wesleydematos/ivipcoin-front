@@ -1,6 +1,11 @@
 import {Backdrop, Box, Modal, Fade, Typography, TextField, Button} from "@mui/material"
 
+import {useForm} from "react-hook-form"
+import {yupResolver} from "@hookform/resolvers/yup"
+
 import {useTaskContext} from "../../../contexts/TaskContext"
+import {iCreateTask} from "../../../contexts/TaskContext/interfaces"
+import {taskSchema} from "../../../schemas"
 
 const style = {
   position: "absolute",
@@ -14,7 +19,13 @@ const style = {
 }
 
 export const UpdateTaskModal = () => {
-  const {openEdit, handleEditClose, task} = useTaskContext()
+  const {openEdit, handleEditClose, editTask} = useTaskContext()
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<iCreateTask>({resolver: yupResolver(taskSchema)})
 
   return (
     <Modal
@@ -36,8 +47,10 @@ export const UpdateTaskModal = () => {
           <Typography id="transition-modal-title" variant="h6" component="h2" sx={{color: "#fff"}}>
             Editar tarefa
           </Typography>
-          <Box component="form" sx={{mt: 1}} onSubmit={()=> alert(task.id)}>
+          <Box component="form" sx={{mt: 1}} noValidate onSubmit={handleSubmit(editTask)}>
           <TextField
+            error={!!errors.title}
+            {...register("title")}
             margin="normal"
             required
             fullWidth
@@ -46,9 +59,10 @@ export const UpdateTaskModal = () => {
             name="title"
             autoComplete="title"
             autoFocus
-            value={task.title}
           />
           <TextField
+            error={!!errors.description}
+            {...register("description")}
             sx={{color: "black"}}
             margin="normal"
             required
@@ -58,7 +72,6 @@ export const UpdateTaskModal = () => {
             name="description"
             autoComplete="description"
             autoFocus
-            value={task.description}
           />
           <Button
             type="submit"

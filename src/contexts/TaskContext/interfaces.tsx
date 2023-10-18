@@ -26,6 +26,7 @@ export interface iTaskContext {
   handleDeleteClose: () => void
   deleteTask: (taskId: string) => Promise<void>
   createTask: (data: iCreateTask) => Promise<void>
+  editTask: (data: iCreateTask) => Promise<void>
 }
 
 export interface iTaskContextProps {

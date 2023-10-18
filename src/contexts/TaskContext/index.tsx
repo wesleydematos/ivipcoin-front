@@ -89,6 +89,23 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
     }
   }
 
+  const editTask = async (data: iCreateTask) => {
+    setLoading(true)
+    
+    try {
+      await api.patch(`/tasks/${task.id}`, data)
+      await getMyTaskList()
+      setTaskListUpdate(!taskListUpdate)
+      handleEditClose()
+      toast.success("Tarefa editada com sucesso!")
+    } catch (error) {
+      console.log(error)
+      toast.success("Não foi possível editar a tarefa!")
+    } finally{
+      setLoading(false)
+    }
+  }
+
   return (
     <TaskContext.Provider value={{
       getTasks,
@@ -115,7 +132,8 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
       handleDeleteOpen,
       handleDeleteClose,
       deleteTask,
-      createTask
+      createTask,
+      editTask
     }}>
       {children}
     </TaskContext.Provider>
