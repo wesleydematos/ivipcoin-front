@@ -1,7 +1,9 @@
 import {createContext, useContext, useState} from "react"
+
+import {toast} from "react-toastify"
+
 import {iTask, iTaskContext, iTaskContextProps} from "./interfaces"
 import {api} from "../../services/api"
-import {toast} from "react-toastify"
 
 const TaskContext = createContext<iTaskContext>({} as iTaskContext)
 
@@ -13,9 +15,16 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
   const [taskListUpdate, setTaskListUpdate] = useState(false)
   const [refreshTask] = useState(false)
   const [openCreate, setOpenCreate] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+  const [task, setTask] = useState({} as iTask)
 
-  const handleCreateOpen = () => setOpenCreate(true);
-  const handleCreateClose = () => setOpenCreate(false);
+  const handleCreateOpen = () => setOpenCreate(true)
+  const handleCreateClose = () => setOpenCreate(false)
+  const handleEditOpen = () => setOpenEdit(true)
+  const handleEditClose = () => setOpenEdit(false)
+  const handleDeleteOpen = () => setOpenDelete(true)
+  const handleDeleteClose = () => setOpenDelete(false)
 
 
   const getFullTaskListRequest = async () => {
@@ -28,7 +37,7 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
   }
 
   const getTasks = async (): Promise<void> => {
-    const token = localStorage.getItem("@Token-ivipcoin");
+    const token = localStorage.getItem("@Token-ivipcoin")
     api.defaults.headers.common.authorization = `Bearer ${token}`
 
     try {
@@ -41,9 +50,9 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
   }
 
   const getCurrentTasks = () => {
-    const startIndex = currentPage * TASKS_PER_PAGE;
-    const endIndex = startIndex + TASKS_PER_PAGE;
-    return taskList.slice(startIndex, endIndex);
+    const startIndex = currentPage * TASKS_PER_PAGE
+    const endIndex = startIndex + TASKS_PER_PAGE
+    return taskList.slice(startIndex, endIndex)
   }
 
   const getMyTaskList = async () => {
@@ -70,7 +79,17 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
       openCreate,
       setOpenCreate,
       handleCreateClose,
-      handleCreateOpen
+      handleCreateOpen,
+      openEdit,
+      setOpenEdit,
+      handleEditOpen,
+      handleEditClose,
+      task,
+      setTask,
+      openDelete,
+      setOpenDelete,
+      handleDeleteOpen,
+      handleDeleteClose
     }}>
       {children}
     </TaskContext.Provider>

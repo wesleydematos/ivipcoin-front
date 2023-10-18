@@ -9,9 +9,11 @@ import ReactPaginate from "react-paginate"
 import {useTaskContext} from "../../../contexts/TaskContext"
 import {iTask} from "../../../contexts/TaskContext/interfaces"
 import "./index.css"
+import {UpdateTaskModal} from "../UpdateTaskModal"
+import { DeleteTaskModal } from "../DeleteTaskModal"
 
 export const TaskList = () => {
-  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, refreshTask, taskListUpdate, getTasks} = useTaskContext()
+  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, refreshTask, taskListUpdate, getTasks, handleEditOpen, setTask, handleDeleteOpen} = useTaskContext()
 
   useEffect(() => {
     getMyTaskList()
@@ -36,8 +38,10 @@ export const TaskList = () => {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={task.title} secondary={task.description}/>
-            <EditIcon/>
-            <DeleteIcon/>
+            <EditIcon onClick={()=>{handleEditOpen(); setTask(task)}}/>
+            <UpdateTaskModal/>
+            <DeleteIcon onClick={()=>{handleDeleteOpen(); setTask(task)}}/>
+            <DeleteTaskModal/>
           </ListItem>
           ))}
         </List>

@@ -15,6 +15,16 @@ export interface iTaskContext {
   setOpenCreate: React.Dispatch<React.SetStateAction<boolean>>
   handleCreateOpen: () => void
   handleCreateClose: () => void
+  openEdit: boolean
+  setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>
+  handleEditOpen: () => void
+  handleEditClose: () => void
+  task: iTask
+  setTask: React.Dispatch<React.SetStateAction<iTask>>
+  openDelete: boolean
+  setOpenDelete: React.Dispatch<React.SetStateAction<boolean>>
+  handleDeleteOpen: () => void
+  handleDeleteClose: () => void
 }
 
 export interface iTaskContextProps {
