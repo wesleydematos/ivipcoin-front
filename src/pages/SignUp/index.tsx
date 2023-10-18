@@ -1,18 +1,13 @@
 import {Avatar, Button, TextField, Link, Grid, Box, Typography, Container} from "@mui/material"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import {useForm} from "react-hook-form"
-import {iRegisterData} from "../../contexts/UserContext/interfaces"
-import {yupResolver} from "@hookform/resolvers/yup"
-import {registerSchema} from "../../schemas"
-import {useUserContext} from "../../contexts/UserContext"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 6 }}>
-      Copyright © Gerenciador de Tarefas {new Date().getFullYear()}.
-    </Typography>
-  )
-}
+import {useForm} from "react-hook-form"
+import {yupResolver} from "@hookform/resolvers/yup"
+
+import {iRegisterData} from "../../contexts/UserContext/interfaces"
+import {useUserContext} from "../../contexts/UserContext"
+import {registerSchema} from "../../schemas"
+import {Footer} from "../../components"
 
 export const SignUpPage = () =>{
   const {
@@ -29,13 +24,13 @@ const {handleRegister} = useUserContext()
         sx={{
             minWidth: "100vw",
             display: "flex",
-            justifyContent: "center"
+            flexDirection: "column"
         }}
     >
-      <Container component="main" maxWidth="xs">
+      <Container maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
+            marginY: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center"
@@ -117,8 +112,8 @@ const {handleRegister} = useUserContext()
             </Grid>
           </Box>
         </Box>
-        <Copyright/>
       </Container>
+      <Footer/>
     </Box>
   )
 }
