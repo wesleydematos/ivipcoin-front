@@ -1,8 +1,11 @@
 import {AppBar, Box, Button, Toolbar, Typography, Container} from "@mui/material"
 
-import {Footer} from "../../components"
+import {CreateTaskModal, Footer, TaskList} from "../../components"
+import {useTaskContext} from "../../contexts/TaskContext"
 
 export const TaskPage = () => {
+  const {handleCreateOpen} = useTaskContext()
+
   return (
     <Box component="main" sx={{minWidth: "100vw", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
       <AppBar
@@ -22,11 +25,12 @@ export const TaskPage = () => {
       </AppBar>
       {/* criar task */}
       <Container disableGutters maxWidth="lg" component="section" sx={{ pt: 8, pb: 6 }}>
-        form de criar
+        <Button variant="outlined" onClick={handleCreateOpen}>Criar Tarefa</Button>
+        <CreateTaskModal/>
       </Container>
       {/* Listar tasks */}
       <Container disableGutters maxWidth="lg" component="section">
-        tasks
+        <TaskList/>
       </Container>
       {/* Footer */}
      <Footer/>

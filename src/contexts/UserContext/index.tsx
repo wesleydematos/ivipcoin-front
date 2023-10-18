@@ -22,7 +22,9 @@ export const UserProvider = ({children}: iUserContextProps) => {
             api.defaults.headers.common.authorization = `Bearer ${token}`
 
             localStorage.setItem("@Token-ivipcoin", token)
-
+            localStorage.setItem("@username", data.displayName)
+            localStorage.setItem("@userId", data.uid)
+            
             setUsername(data.displayName)
             toast.success("Login efetuado com sucesso!")
             navigate("/tarefas")
