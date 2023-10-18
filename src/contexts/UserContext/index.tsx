@@ -3,6 +3,7 @@ import {iLogin, iRegister, iRegisterData, iUserContext, iUserContextProps} from 
 import {useNavigate} from "react-router-dom"
 import {api} from "../../services/api"
 import {toast} from "react-toastify"
+import {AxiosError} from "axios"
 
 const UserContext = createContext<iUserContext>({} as iUserContext)
 
@@ -17,19 +18,16 @@ export const UserProvider = ({children}: iUserContextProps) => {
         try {
             const {data} = await api.post("user/login", body)
             const token = data.stsTokenManager.accessToken
-            console.log(token);
-            console.log(data.displayName)
 
             api.defaults.headers.common.authorization = `Bearer ${token}`
 
             localStorage.setItem("@Token-ivipcoin", token)
 
             setUsername(data.displayName)
-            toast.success("Login efetuado com sucesso")
+            toast.success("Login efetuado com sucesso!")
             navigate("/tarefas")
-        } catch (error) {
-            toast.error("Falha ao efetuar o login")
-            console.log(error)
+        } catch (error: AxiosError | any) {
+            toast.error(error.response.data.message || "Erro ao efetuar login!")
         } finally {
             setLoading(false)
         }
@@ -43,8 +41,9 @@ export const UserProvider = ({children}: iUserContextProps) => {
             await api.post("/user", userData)
             toast.success("Conta criada com sucesso!")
             navigate("/");
-        } catch (error) {
-            toast.error("Falha ao criar a conta, caso o erro persista tente outro email.")
+        } catch (error: AxiosError | any) {
+            const message = error.response.data.message.code === "auth/email-already-in-use" ? "Email já cadastrado!" : "Falha ao registrar a conta!"
+            toast.error(message)
         } finally {
             setLoading(false)
         }
