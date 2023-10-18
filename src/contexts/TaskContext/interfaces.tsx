@@ -25,10 +25,16 @@ export interface iTaskContext {
   handleDeleteOpen: () => void
   handleDeleteClose: () => void
   deleteTask: (taskId: string) => Promise<void>
+  createTask: (data: iCreateTask) => Promise<void>
 }
 
 export interface iTaskContextProps {
   children: ReactNode
+}
+
+export interface iCreateTask{
+  description: string
+  title: string
 }
 
 export interface iTask {

@@ -2,7 +2,7 @@ import {createContext, useContext, useState} from "react"
 
 import {toast} from "react-toastify"
 
-import {iTask, iTaskContext, iTaskContextProps} from "./interfaces"
+import {iCreateTask, iTask, iTaskContext, iTaskContextProps} from "./interfaces"
 import {api} from "../../services/api"
 import { useUserContext } from "../UserContext"
 
@@ -72,6 +72,23 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
     }
   }
 
+  const createTask = async (data: iCreateTask) => {
+    setLoading(true)
+    
+    try {
+      await api.post("/tasks", data)
+      await getMyTaskList()
+      setTaskListUpdate(!taskListUpdate)
+      handleCreateClose()
+      toast.success("Tarefa criada com sucesso!")
+    } catch (error) {
+      console.log(error)
+      toast.success("Não foi possível criar a tarefa!")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <TaskContext.Provider value={{
       getTasks,
@@ -97,7 +114,8 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
       setOpenDelete,
       handleDeleteOpen,
       handleDeleteClose,
-      deleteTask
+      deleteTask,
+      createTask
     }}>
       {children}
     </TaskContext.Provider>

@@ -1,6 +1,11 @@
 import {Backdrop, Box, Modal, Fade, Typography, TextField, Button} from "@mui/material"
 
+import {useForm} from "react-hook-form"
+import {yupResolver} from "@hookform/resolvers/yup"
+
 import {useTaskContext} from "../../../contexts/TaskContext"
+import { iCreateTask } from "../../../contexts/TaskContext/interfaces"
+import { taskSchema } from "../../../schemas"
 
 const style = {
   position: "absolute",
@@ -14,7 +19,13 @@ const style = {
 }
 
 export const CreateTaskModal = () => {
-  const {openCreate, handleCreateClose} = useTaskContext()
+  const {openCreate, handleCreateClose, createTask} = useTaskContext()
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+} = useForm<iCreateTask>({resolver: yupResolver(taskSchema)})
 
   return (
     <Modal
@@ -36,8 +47,10 @@ export const CreateTaskModal = () => {
           <Typography id="transition-modal-title" variant="h6" component="h2" sx={{color: "#fff"}}>
             Criar tarefa
           </Typography>
-          <Box component="form" sx={{mt: 1}}>
+          <Box component="form" noValidate onSubmit={handleSubmit(createTask)} sx={{mt: 1}}>
           <TextField
+            error={!!errors.title}
+            {...register("title")}
             margin="normal"
             required
             fullWidth
@@ -48,6 +61,8 @@ export const CreateTaskModal = () => {
             autoFocus
           />
           <TextField
+            error={!!errors.description}
+            {...register("description")}
             sx={{color: "black"}}
             margin="normal"
             required
