@@ -44,6 +44,7 @@ export const SignInPage = () => {
           </Typography>
           <Box component="form" onSubmit={handleSubmit(handleLogin)} noValidate sx={{mt: 1}}>
           <TextField
+            helperText="Email obrigatório!"
             error={!!errors.email}
             {...register("email")}
             margin="normal"
@@ -56,6 +57,7 @@ export const SignInPage = () => {
             autoFocus
           />
           <TextField
+            helperText="Senha obrigatória!"
             error={!!errors.password}
             {...register("password")}
             margin="normal"

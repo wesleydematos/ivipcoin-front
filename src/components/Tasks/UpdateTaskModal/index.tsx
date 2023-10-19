@@ -34,7 +34,7 @@ export const UpdateTaskModal = () => {
       open={openEdit}
       onClose={handleEditClose}
       closeAfterTransition
-      slots={{ backdrop: Backdrop }}
+      slots={{backdrop: Backdrop}}
       slotProps={{
         backdrop: {
           timeout: 500,
@@ -49,6 +49,7 @@ export const UpdateTaskModal = () => {
           </Typography>
           <Box component="form" sx={{mt: 1}} noValidate onSubmit={handleSubmit(editTask)}>
           <TextField
+            helperText="Título obrigatório!"
             error={!!errors.title}
             {...register("title")}
             margin="normal"
@@ -61,6 +62,7 @@ export const UpdateTaskModal = () => {
             autoFocus
           />
           <TextField
+            helperText="Descrição obrigatória!"
             error={!!errors.description}
             {...register("description")}
             sx={{color: "black"}}

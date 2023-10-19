@@ -36,16 +36,17 @@ const {handleRegister} = useUserContext()
             alignItems: "center"
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{m: 1, bgcolor: "secondary.main"}}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Registre-se
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit(handleRegister)} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit(handleRegister)} sx={{mt: 3}}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  helperText="Nome obrigatório!"
                   error={!!errors.firstName}
                   {...register("firstName")}
                   autoComplete="given-name"
@@ -59,6 +60,7 @@ const {handleRegister} = useUserContext()
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  helperText="Sobrenome obrigatório!"
                   error={!!errors.lastName}
                   {...register("lastName")}
                   required
@@ -71,6 +73,7 @@ const {handleRegister} = useUserContext()
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  helperText="Email obrigatório!"
                   error={!!errors.email}
                   {...register("email")}
                   required
@@ -83,6 +86,7 @@ const {handleRegister} = useUserContext()
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  helperText="Senha obrigatória e com mínimo de 6 caracteres!"
                   error={!!errors.password}
                   {...register("password")}
                   required
