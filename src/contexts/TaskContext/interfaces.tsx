@@ -9,8 +9,7 @@ export interface iTaskContext {
   taskList: iTask[] | []
   getMyTaskList: () => Promise<void>
   taskListUpdate: boolean
-  refreshTask: boolean,
-  openCreate: boolean,
+  openCreate: boolean
   setOpenCreate: React.Dispatch<React.SetStateAction<boolean>>
   handleCreateOpen: () => void
   handleCreateClose: () => void

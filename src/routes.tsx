@@ -5,18 +5,18 @@ import {SignInPage, SignUpPage, TaskPage} from "./pages"
 import {AuthRoutes, Loading} from "./components"
 
 export const RoutesMain = () => {
-    const {loading} = useUserContext()
+  const {loading} = useUserContext()
 
-    if(loading) return <Loading/>
+  if(loading) return <Loading/>
 
-    return (
-        <Routes>
-            <Route path="/" element={<SignInPage />}/>
-            <Route path="/registro" element={<SignUpPage/>}/>
-            <Route element={<AuthRoutes/>}>
-                <Route path="/tarefas" element={<TaskPage/>}/>
-            </Route>
-            <Route path="*" element={<Navigate to="/"/>}/>
-        </Routes>
-    )
+  return (
+    <Routes>
+      <Route path="/" element={<SignInPage />}/>
+      <Route path="/registro" element={<SignUpPage/>}/>
+      <Route element={<AuthRoutes/>}>
+        <Route path="/tarefas" element={<TaskPage/>}/>
+      </Route>
+      <Route path="*" element={<Navigate to="/"/>}/>
+    </Routes>
+  )
 }

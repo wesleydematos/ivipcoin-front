@@ -49,6 +49,7 @@ export const CreateTaskModal = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit(createTask)} sx={{mt: 1}}>
           <TextField
+            helperText="Título obrigatório!"
             error={!!errors.title}
             {...register("title")}
             margin="normal"
@@ -61,6 +62,7 @@ export const CreateTaskModal = () => {
             autoFocus
           />
           <TextField
+            helperText="Descrição obrigatória!"
             error={!!errors.description}
             {...register("description")}
             sx={{color: "black"}}

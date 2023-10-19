@@ -23,16 +23,13 @@ export const TaskPage = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      {/* criar task */}
-      <Container disableGutters maxWidth="lg" component="section" sx={{ pt: 8, pb: 6 }}>
+      <Container disableGutters maxWidth="lg" component="section" sx={{pt: 8, pb: 6}}>
         <Button variant="outlined" onClick={handleCreateOpen}>Criar Tarefa</Button>
         <CreateTaskModal/>
       </Container>
-      {/* Listar tasks */}
       <Container disableGutters maxWidth="lg" component="section">
         <TaskList/>
       </Container>
-      {/* Footer */}
      <Footer/>
     </Box>
   )

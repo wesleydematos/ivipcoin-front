@@ -16,7 +16,7 @@ export const SignInPage = () => {
     formState: {errors},
   } = useForm<iLogin>({resolver: yupResolver(loginSchema)})
 
-    const {handleLogin} = useUserContext()
+  const {handleLogin} = useUserContext()
 
   return (
     <Box 

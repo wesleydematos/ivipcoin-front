@@ -2,20 +2,20 @@ import {createContext, useContext, useState} from "react"
 
 import {toast} from "react-toastify"
 
-import {iCreateTask, iTask, iTaskContext, iTaskContextProps} from "./interfaces"
+import {useUserContext} from "../UserContext"
 import {api} from "../../services/api"
-import { useUserContext } from "../UserContext"
+import {iCreateTask, iTask, iTaskContext, iTaskContextProps} from "./interfaces"
 
 const TaskContext = createContext<iTaskContext>({} as iTaskContext)
 
 export const TaskProvider = ({children}: iTaskContextProps) => {
   const {setLoading} = useUserContext()
   const TASKS_PER_PAGE = 5
+  
   const [tasks, setTasks] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
   const [taskList, setTaskList] = useState([])
   const [taskListUpdate, setTaskListUpdate] = useState(false)
-  const [refreshTask] = useState(false)
   const [openCreate, setOpenCreate] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
@@ -116,7 +116,6 @@ export const TaskProvider = ({children}: iTaskContextProps) => {
       taskList,
       getMyTaskList,
       taskListUpdate,
-      refreshTask,
       openCreate,
       setOpenCreate,
       handleCreateClose,

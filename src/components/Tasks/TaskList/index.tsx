@@ -8,16 +8,16 @@ import ReactPaginate from "react-paginate"
 
 import {useTaskContext} from "../../../contexts/TaskContext"
 import {iTask} from "../../../contexts/TaskContext/interfaces"
-import "./index.css"
 import {UpdateTaskModal} from "../UpdateTaskModal"
-import { DeleteTaskModal } from "../DeleteTaskModal"
+import {DeleteTaskModal} from "../DeleteTaskModal"
+import "./index.css"
 
 export const TaskList = () => {
-  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, refreshTask, taskListUpdate,  handleEditOpen, setTask, handleDeleteOpen} = useTaskContext()
+  const {getCurrentTasks, TASKS_PER_PAGE, setCurrentPage, taskList, getMyTaskList, taskListUpdate, handleEditOpen, setTask, handleDeleteOpen} = useTaskContext()
 
   useEffect(() => {
     getMyTaskList()
-  }, [refreshTask, taskListUpdate])
+  }, [taskListUpdate])
 
   if(taskList.length < 1){
     return <Typography>Não há tarefas para mostrar.</Typography>
@@ -43,15 +43,15 @@ export const TaskList = () => {
         </List>
 
       {taskList.length > TASKS_PER_PAGE && (
-          <ReactPaginate
-              previousLabel={"< Previous |"}
-              nextLabel={"| Next >"}
-              breakLabel={"..."}
-              pageCount={Math.ceil(taskList.length / TASKS_PER_PAGE)}
-              onPageChange={(data) => setCurrentPage(data.selected)}
-              containerClassName={"pagination"}
-              activeClassName={"active"}
-          />
+        <ReactPaginate
+          previousLabel={"< Previous |"}
+          nextLabel={"| Next >"}
+          breakLabel={"..."}
+          pageCount={Math.ceil(taskList.length / TASKS_PER_PAGE)}
+          onPageChange={(data) => setCurrentPage(data.selected)}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+        />
       )}
     </Box>
   )
